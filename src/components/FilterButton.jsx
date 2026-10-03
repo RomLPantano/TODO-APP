@@ -1,4 +1,4 @@
-function FilterButton({ children, active = false }) {
+function FilterButton({ children, active = false, onClick }) {
   const baseStyles =
     "rounded-lg px-4 py-2 text-sm font-medium shadow-sm transition";
 
@@ -10,6 +10,7 @@ function FilterButton({ children, active = false }) {
   return (
     <button
       type="button"
+      onClick={onClick}
       className={`${baseStyles} ${
         active ? activeStyles : inactiveStyles
       }`}
