@@ -1,8 +1,30 @@
-function Form() {
+import { useState } from "react";
+
+function Form({ onAddTask }) {
+  const [text, setText] = useState("");
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const trimmedText = text.trim();
+
+    if (!trimmedText) {
+      return;
+    }
+
+    onAddTask(trimmedText);
+    setText("");
+  };
+
   return (
-    <form className="mb-6 flex overflow-hidden rounded-xl bg-white shadow-sm">
+    <form
+      onSubmit={handleSubmit}
+      className="mb-6 flex overflow-hidden rounded-xl bg-white shadow-sm"
+    >
       <input
         type="text"
+        value={text}
+        onChange={(event) => setText(event.target.value)}
         placeholder="¿Qué necesitas hacer?"
         className="min-w-0 flex-1 px-4 py-3 text-slate-700 outline-none placeholder:text-slate-400"
       />

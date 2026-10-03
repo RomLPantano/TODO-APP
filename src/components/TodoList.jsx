@@ -1,11 +1,15 @@
 import Todo from "./Todo";
 
-function TodoList() {
+function TodoList({ tasks }) {
   return (
     <ul className="space-y-3">
-      <Todo text="Comprar comida" completed={false} />
-      <Todo text="Estudiar React" completed={false} />
-      <Todo text="Terminar TP" completed={true} />
+      {tasks.map((task) => (
+        <Todo
+          key={task.id}
+          text={task.text}
+          completed={task.completed}
+        />
+      ))}
     </ul>
   );
 }
