@@ -5,6 +5,7 @@ import TodoList from "./components/TodoList";
 
 function App() {
   const [tasks, setTasks] = useState([]);
+  const [activeFilter, setActiveFilter] = useState("all");
 
   const addTask = (text) => {
     const newTask = {
@@ -32,6 +33,18 @@ function App() {
     );
   };
 
+  const getFilteredTasks = () => {
+  if (activeFilter === "completed") {
+    return tasks.filter((task) => task.completed);
+  }
+
+  if (activeFilter === "pending") {
+    return tasks.filter((task) => !task.completed);
+  }
+
+  return tasks;
+  };
+
   return (
     <main className="min-h-screen bg-slate-100 px-4 py-8">
       <div className="mx-auto w-full max-w-2xl">
@@ -41,10 +54,13 @@ function App() {
 
         <Form onAddTask={addTask} />
 
-        <FilterButtons />
+        <FilterButtons
+          activeFilter={activeFilter}
+          onFilterChange={setActiveFilter}
+        />
 
         <TodoList
-          tasks={tasks}
+          tasks={getFilteredTasks()}
           onToggleTask={toggleTask}
           onDeleteTask={deleteTask}
         />
