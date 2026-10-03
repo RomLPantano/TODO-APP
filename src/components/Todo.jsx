@@ -1,4 +1,4 @@
-function Todo({ text, completed, onToggle }) {
+function Todo({ text, completed, onToggle, onDelete }) {
   return (
     <li
       className={`flex items-center gap-3 rounded-xl p-4 shadow-sm transition ${
@@ -7,25 +7,24 @@ function Todo({ text, completed, onToggle }) {
           : "bg-white text-slate-700"
       }`}
     >
-        <button
+      <button
         type="button"
         onClick={onToggle}
         className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 transition ${
-            completed
+          completed
             ? "border-white"
             : "border-indigo-500 hover:bg-indigo-50"
         }`}
         aria-label={
-            completed
+          completed
             ? "Marcar tarea como pendiente"
             : "Marcar tarea como completada"
         }
-        >
+      >
         {completed && (
-            <span className="h-2.5 w-2.5 rounded-full bg-green-500" />
+          <span className="h-2.5 w-2.5 rounded-full bg-green-500" />
         )}
-        </button>
-    
+      </button>
 
       <span
         className={`flex-1 ${
@@ -37,6 +36,7 @@ function Todo({ text, completed, onToggle }) {
 
       <button
         type="button"
+        onClick={onDelete}
         className={`text-xl transition ${
           completed
             ? "text-white hover:text-green-100"

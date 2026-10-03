@@ -26,6 +26,12 @@ function App() {
     );
   };
 
+  const deleteTask = (id) => {
+    setTasks((currentTasks) =>
+      currentTasks.filter((task) => task.id !== id)
+    );
+  };
+
   return (
     <main className="min-h-screen bg-slate-100 px-4 py-8">
       <div className="mx-auto w-full max-w-2xl">
@@ -40,8 +46,8 @@ function App() {
         <TodoList
           tasks={tasks}
           onToggleTask={toggleTask}
+          onDeleteTask={deleteTask}
         />
-        
       </div>
     </main>
   );
