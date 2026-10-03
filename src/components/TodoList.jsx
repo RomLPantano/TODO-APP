@@ -2,7 +2,7 @@ import Todo from "./Todo";
 
 function TodoList({ tasks, onToggleTask, onDeleteTask }) {
   return (
-    <ul className="space-y-3">
+    <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {tasks.map((task) => (
         <Todo
           key={task.id}

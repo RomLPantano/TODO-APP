@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import Form from "./components/Form";
 import FilterButtons from "./components/FilterButtons";
 import TodoList from "./components/TodoList";
+import AddTaskModal from "./components/AddTaskModal";
+import AddTaskButton from "./components/AddTaskButton";
 
 function App() {
   const [tasks, setTasks] = useState(() => {
@@ -10,6 +12,7 @@ function App() {
   });
 
   const [activeFilter, setActiveFilter] = useState("all");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -54,26 +57,39 @@ function App() {
   };
 
   return (
-    <main className="min-h-screen bg-slate-100 px-4 py-8">
-      <div className="mx-auto w-full max-w-2xl">
-        <h1 className="mb-8 text-center text-4xl font-bold text-slate-800">
-          TODO APP
-        </h1>
+  <main className="min-h-screen bg-slate-100 px-4 py-8">
+    <div className="mx-auto w-full max-w-6xl">
+      <h1 className="mb-8 text-center text-4xl font-bold text-slate-800">
+        TODO APP
+      </h1>
 
-        <Form onAddTask={addTask} />
+      <div className="grid gap-6 md:grid-cols-[220px_1fr]">
+        <aside className="rounded-2xl bg-white p-4 shadow-sm">
+          <AddTaskButton onClick={() => setIsModalOpen(true)} />
 
-        <FilterButtons
-          activeFilter={activeFilter}
-          onFilterChange={setActiveFilter}
-        />
+          <FilterButtons
+            activeFilter={activeFilter}
+            onFilterChange={setActiveFilter}
+          />
+        </aside>
 
-        <TodoList
-          tasks={getFilteredTasks()}
-          onToggleTask={toggleTask}
-          onDeleteTask={deleteTask}
-        />
+        <section>
+          <TodoList
+            tasks={getFilteredTasks()}
+            onToggleTask={toggleTask}
+            onDeleteTask={deleteTask}
+          />
+        </section>
       </div>
-    </main>
+    </div>
+
+    {isModalOpen && (
+      <AddTaskModal
+        onAddTask={addTask}
+        onClose={() => setIsModalOpen(false)}
+      />
+    )}
+  </main>
   );
 }
 
