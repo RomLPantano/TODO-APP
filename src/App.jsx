@@ -16,6 +16,16 @@ function App() {
     setTasks((currentTasks) => [...currentTasks, newTask]);
   };
 
+  const toggleTask = (id) => {
+    setTasks((currentTasks) =>
+      currentTasks.map((task) =>
+        task.id === id
+          ? { ...task, completed: !task.completed }
+          : task
+      )
+    );
+  };
+
   return (
     <main className="min-h-screen bg-slate-100 px-4 py-8">
       <div className="mx-auto w-full max-w-2xl">
@@ -27,7 +37,11 @@ function App() {
 
         <FilterButtons />
 
-        <TodoList tasks={tasks} />
+        <TodoList
+          tasks={tasks}
+          onToggleTask={toggleTask}
+        />
+        
       </div>
     </main>
   );

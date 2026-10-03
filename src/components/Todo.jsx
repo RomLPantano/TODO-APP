@@ -1,19 +1,35 @@
-function Todo({ text, completed }) {
+function Todo({ text, completed, onToggle }) {
   return (
-    <li className="flex items-center gap-3 rounded-xl bg-white p-4 shadow-sm">
-      <button
+    <li
+      className={`flex items-center gap-3 rounded-xl p-4 shadow-sm transition ${
+        completed
+          ? "bg-green-500 text-white"
+          : "bg-white text-slate-700"
+      }`}
+    >
+        <button
         type="button"
-        className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 border-indigo-500 text-sm text-indigo-600 transition hover:bg-indigo-50"
+        onClick={onToggle}
+        className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 transition ${
+            completed
+            ? "border-white"
+            : "border-indigo-500 hover:bg-indigo-50"
+        }`}
         aria-label={
-          completed ? "Marcar tarea como pendiente" : "Marcar tarea como completada"
+            completed
+            ? "Marcar tarea como pendiente"
+            : "Marcar tarea como completada"
         }
-      >
-        {completed && "✓"}
-      </button>
+        >
+        {completed && (
+            <span className="h-2.5 w-2.5 rounded-full bg-green-500" />
+        )}
+        </button>
+    
 
       <span
-        className={`flex-1 text-slate-700 ${
-          completed ? "text-slate-400 line-through" : ""
+        className={`flex-1 ${
+          completed ? "font-bold text-white" : ""
         }`}
       >
         {text}
@@ -21,7 +37,11 @@ function Todo({ text, completed }) {
 
       <button
         type="button"
-        className="text-xl text-red-500 transition hover:text-red-700"
+        className={`text-xl transition ${
+          completed
+            ? "text-white hover:text-green-100"
+            : "text-red-500 hover:text-red-700"
+        }`}
         aria-label={`Eliminar tarea: ${text}`}
       >
         🗑
