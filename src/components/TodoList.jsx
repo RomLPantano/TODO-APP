@@ -8,6 +8,7 @@ function TodoList({ tasks, onToggleTask, onDeleteTask }) {
           key={task.id}
           text={task.text}
           completed={task.completed}
+          color={task.color}
           onToggle={() => onToggleTask(task.id)}
           onDelete={() => onDeleteTask(task.id)}
         />

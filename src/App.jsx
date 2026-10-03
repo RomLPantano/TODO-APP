@@ -18,14 +18,19 @@ function App() {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
 
-  const addTask = (text) => {
+  const addTask = (text, color) => {
     const newTask = {
       id: crypto.randomUUID(),
       text,
       completed: false,
+      color,
     };
 
     setTasks((currentTasks) => [...currentTasks, newTask]);
+
+    if (activeFilter !== "all") {
+      setActiveFilter("pending");
+    }
   };
 
   const toggleTask = (id) => {
@@ -59,9 +64,17 @@ function App() {
   return (
   <main className="min-h-screen bg-slate-100 px-4 py-8">
     <div className="mx-auto w-full max-w-6xl">
-      <h1 className="mb-8 text-center text-4xl font-bold text-slate-800">
-        TODO APP
-      </h1>
+      <div className="mb-10 rounded-2xl bg-white px-6 py-8 text-center shadow-sm">
+        <p className="mb-2 text-sm font-semibold uppercase tracking-[0.3em] text-indigo-500">
+          Organiza tu día
+        </p>
+
+        <h1 className="text-5xl font-black tracking-tight text-slate-800">
+          Mis tareas
+        </h1>
+
+        <div className="mx-auto mt-3 h-1 w-16 rounded-full bg-indigo-600" />
+      </div>
 
       <div className="grid gap-6 md:grid-cols-[220px_1fr]">
         <aside className="rounded-2xl bg-white p-4 shadow-sm">

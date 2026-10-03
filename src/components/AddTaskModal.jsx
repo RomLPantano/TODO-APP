@@ -1,4 +1,5 @@
 import Form from "./Form";
+import { FaXmark } from "react-icons/fa6";
 
 function AddTaskModal({ onAddTask, onClose }) {
   return (
@@ -15,15 +16,15 @@ function AddTaskModal({ onAddTask, onClose }) {
             className="text-2xl text-slate-400 transition hover:text-slate-600"
             aria-label="Cerrar modal"
           >
-            ×
+            <FaXmark />
           </button>
         </div>
 
         <Form
-          onAddTask={(text) => {
-            onAddTask(text);
+        onAddTask={(text, color) => {
+            onAddTask(text, color);
             onClose();
-          }}
+        }}
         />
       </div>
     </div>

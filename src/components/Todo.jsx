@@ -1,9 +1,17 @@
-function Todo({ text, completed, onToggle, onDelete }) {
+import { FaTrash, FaCheck  } from "react-icons/fa6";
+
+const noteColors = {
+  yellow: "bg-yellow-200",
+  pink: "bg-pink-200",
+  blue: "bg-blue-200",
+};
+
+function Todo({ text, completed, color = "yellow", onToggle, onDelete }) {
   return (
-    <li className={`relative min-h-48 p-5 shadow-md transition ${
+    <li className={`relative min-h-48 p-5 shadow-lg transition duration-200 hover:-translate-y-1 hover:shadow-xl ${
         completed
         ? "rotate-1 bg-green-400 text-white"
-        : "-rotate-1 bg-yellow-200 text-slate-700"
+        : `-rotate-1 ${noteColors[color] ?? noteColors.yellow} text-slate-700`
     }`}>
       <div className="flex items-start justify-between">
         <button
@@ -11,7 +19,7 @@ function Todo({ text, completed, onToggle, onDelete }) {
             onClick={onToggle}
             className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-full border-2 transition ${
             completed
-                ? "border-white bg-white"
+                ? "border-white"
                 : "border-indigo-500 hover:bg-indigo-50"
             }`}
             aria-label={
@@ -20,9 +28,7 @@ function Todo({ text, completed, onToggle, onDelete }) {
                 : "Marcar tarea como completada"
             }
         >
-            {completed && (
-            <span className="h-2.5 w-2.5 rounded-full bg-green-500" />
-            )}
+            {completed && <FaCheck size={12} />}
         </button>
 
         <button
@@ -35,7 +41,7 @@ function Todo({ text, completed, onToggle, onDelete }) {
             }`}
             aria-label={`Eliminar tarea: ${text}`}
         >
-            🗑
+            <FaTrash />
         </button>
         </div>
 
