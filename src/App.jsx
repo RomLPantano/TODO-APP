@@ -13,6 +13,7 @@ function App() {
 
   const [activeFilter, setActiveFilter] = useState("all");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [taskToEdit, setTaskToEdit] = useState(null);
 
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -46,6 +47,20 @@ function App() {
   const deleteTask = (id) => {
     setTasks((currentTasks) =>
       currentTasks.filter((task) => task.id !== id)
+    );
+  };
+
+  const handleEditTask = (task) => {
+    setTaskToEdit(task);
+  };
+
+  const updateTask = (id, text, color) => {
+    setTasks((currentTasks) =>
+      currentTasks.map((task) =>
+        task.id === id
+          ? { ...task, text, color }
+          : task
+      )
     );
   };
 
@@ -97,16 +112,22 @@ function App() {
           <TodoList
             tasks={getFilteredTasks()}
             onToggleTask={toggleTask}
+            onEditTask={handleEditTask}
             onDeleteTask={deleteTask}
           />
         </section>
       </div>
     </div>
 
-    {isModalOpen && (
+    {(isModalOpen || taskToEdit) && (
       <AddTaskModal
+        task={taskToEdit}
         onAddTask={addTask}
-        onClose={() => setIsModalOpen(false)}
+        onUpdateTask={updateTask}
+        onClose={() => {
+          setIsModalOpen(false);
+          setTaskToEdit(null);
+        }}
       />
     )}
   </main>
