@@ -1,4 +1,4 @@
-import { FaTrash, FaCheck  } from "react-icons/fa6";
+import { FaTrash, FaCheck, FaPen  } from "react-icons/fa6";
 
 const noteColors = {
   yellow: "bg-yellow-200",
@@ -6,7 +6,7 @@ const noteColors = {
   blue: "bg-blue-200",
 };
 
-function Todo({ text, completed, color = "yellow", onToggle, onDelete }) {
+function Todo({ text, completed, color = "yellow", onToggle, onDelete, onEdit }) {
   return (
     <li className={`relative min-h-48 p-5 shadow-lg transition duration-200 hover:-translate-y-1 hover:shadow-xl ${
         completed
@@ -26,9 +26,21 @@ function Todo({ text, completed, color = "yellow", onToggle, onDelete }) {
             completed
                 ? "Marcar tarea como pendiente"
                 : "Marcar tarea como completada"
-            }
-        >
-            {completed && <FaCheck size={12} />}
+            }> {completed && <FaCheck size={12} />}
+        </button>
+      </div>  
+      
+      <div className="absolute bottom-4 right-4 flex items-center gap-3">
+        <button
+            type="button"
+            onClick={onEdit}
+            className={`text-xl transition ${
+            completed
+                ? "text-white hover:text-green-100"
+                : "text-indigo-500 hover:text-indigo-700"
+            }`}
+            aria-label={`Editar tarea: ${text}`}>
+            <FaPen />
         </button>
 
         <button
@@ -39,19 +51,17 @@ function Todo({ text, completed, color = "yellow", onToggle, onDelete }) {
                 ? "text-white hover:text-green-100"
                 : "text-red-500 hover:text-red-700"
             }`}
-            aria-label={`Eliminar tarea: ${text}`}
-        >
+            aria-label={`Eliminar tarea: ${text}`}>
             <FaTrash />
         </button>
-        </div>
 
-        <span
+      </div>
+
+      <span
         className={`mt-6 block break-words text-lg ${
             completed ? "font-bold text-white" : ""
-        }`}
-        >
-        {text}
-        </span>
+            }`}> {text}
+      </span>
     </li>
   );
 }
