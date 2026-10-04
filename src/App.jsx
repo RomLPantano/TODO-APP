@@ -131,6 +131,7 @@ function App() {
             <Button
               variant="secondary"
               onClick={deleteCompletedTasks}
+              disabled={!tasks.some((task) => task.completed)}
               className="w-full">
               Eliminar completadas
             </Button>
@@ -138,6 +139,7 @@ function App() {
             <Button
               variant="danger"
               onClick={() => setShowDeleteConfirmation(true)}
+              disabled={tasks.length === 0}
               className="w-full">
               Eliminar todas
             </Button>
