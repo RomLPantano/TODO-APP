@@ -4,8 +4,10 @@ import TodoList from "./components/TodoList";
 import AddTaskModal from "./components/AddTaskModal";
 import Button from "./components/Button";
 import { FaPlus } from "react-icons/fa";
+import DeleteConfirmationModal from "./components/DeleteConfirmationModal";
 
 function App() {
+  // Estados iniciales-----------------------------------------------
   const [tasks, setTasks] = useState(() => {
     const storedTasks = localStorage.getItem("tasks");
     return storedTasks ? JSON.parse(storedTasks) : [];
@@ -14,11 +16,14 @@ function App() {
   const [activeFilter, setActiveFilter] = useState("all");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [taskToEdit, setTaskToEdit] = useState(null);
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
 
+  // Persistencia----------------------------------------------------
   useEffect(() => {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
 
+  //Agregar tarea ---------------------------------------------------
   const addTask = (text, color) => {
     const newTask = {
       id: crypto.randomUUID(),
@@ -34,6 +39,7 @@ function App() {
     }
   };
 
+  // Completar tarea -------------------------------------------------
   const toggleTask = (id) => {
     setTasks((currentTasks) =>
       currentTasks.map((task) =>
@@ -44,12 +50,24 @@ function App() {
     );
   };
 
+  //Borrar tareas ----------------------------------------------------
   const deleteTask = (id) => {
     setTasks((currentTasks) =>
       currentTasks.filter((task) => task.id !== id)
     );
   };
 
+  const deleteCompletedTasks = () => {
+    setTasks((currentTasks) =>
+      currentTasks.filter((task) => !task.completed)
+    );
+  };
+
+  const deleteAllTasks = () => {
+    setTasks([]);
+  };
+
+  //Editar tarea -----------------------------------------------------
   const handleEditTask = (task) => {
     setTaskToEdit(task);
   };
@@ -64,6 +82,7 @@ function App() {
     );
   };
 
+  // Filtros --------------------------------------------------------
   const getFilteredTasks = () => {
   if (activeFilter === "completed") {
     return tasks.filter((task) => task.completed);
@@ -76,6 +95,7 @@ function App() {
   return tasks;
   };
 
+  // Cuerpo del componente -------------------------------------------
   return (
   <main className="min-h-screen bg-slate-100 px-4 py-8">
     <div className="mx-auto w-full max-w-6xl">
@@ -106,6 +126,22 @@ function App() {
             activeFilter={activeFilter}
             onFilterChange={setActiveFilter}
           />
+
+          <div className="mt-6 flex flex-col gap-2 border-t border-slate-200 pt-6">
+            <Button
+              variant="secondary"
+              onClick={deleteCompletedTasks}
+              className="w-full">
+              Eliminar completadas
+            </Button>
+
+            <Button
+              variant="danger"
+              onClick={() => setShowDeleteConfirmation(true)}
+              className="w-full">
+              Eliminar todas
+            </Button>
+          </div>
         </aside>
 
         <section>
@@ -129,6 +165,15 @@ function App() {
           setTaskToEdit(null);
         }}
       />
+    )}
+
+    {showDeleteConfirmation && (
+      <DeleteConfirmationModal
+        onConfirm={() => {
+          deleteAllTasks();
+          setShowDeleteConfirmation(false);
+        }}
+        onClose={() => setShowDeleteConfirmation(false)}/>
     )}
   </main>
   );

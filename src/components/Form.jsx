@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Button from "./Button";
 
 const colors = [
   { value: "yellow", className: "bg-yellow-200" },
@@ -39,19 +40,21 @@ function Form({
         placeholder="¿Qué necesitas hacer?"
         className="w-full rounded-xl border border-slate-200 px-4 py-3 text-slate-700 outline-none placeholder:text-slate-400 focus:border-indigo-400"
       />
-      <div>
-        <p className="mb-2 text-sm font-medium text-slate-600">
-            Color de la nota
-        </p>
+      <div className="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <p className="mb-2 text-sm font-semibold text-slate-700">
+            Color
+          </p>
 
-        <div className="flex gap-3">
           <div className="flex gap-3">
             {colors.map((colorOption) => (
               <button
                 key={colorOption.value}
                 type="button"
                 onClick={() => setColor(colorOption.value)}
-                className={`h-8 w-8 rounded-full ${colorOption.className} ring-2 transition hover:scale-110 ${
+                className={`h-8 w-8 rounded-full ${
+                  colorOption.className
+                } ring-2 transition hover:scale-110 ${
                   color === colorOption.value
                     ? "ring-indigo-600 ring-offset-2"
                     : "ring-transparent"
@@ -61,13 +64,11 @@ function Form({
             ))}
           </div>
         </div>
-        </div>
 
-      <button
-        type="submit"
-        className="w-full rounded-xl bg-indigo-600 px-5 py-3 font-bold text-white transition hover:bg-indigo-700">
-        {submitLabel}
-      </button>
+        <Button type="submit">
+          {submitLabel}
+        </Button>
+      </div>
     </form>
   );
 }
