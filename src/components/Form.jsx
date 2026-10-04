@@ -1,8 +1,19 @@
 import { useState } from "react";
 
-function Form({ onAddTask }) {
-  const [text, setText] = useState("");
-  const [color, setColor] = useState("yellow");
+const colors = [
+  { value: "yellow", className: "bg-yellow-200" },
+  { value: "pink", className: "bg-pink-200" },
+  { value: "blue", className: "bg-blue-200" },
+];
+
+function Form({
+  initialText = "",
+  initialColor = "yellow",
+  submitLabel = "Agregar tarea",
+  onSubmit,
+}) {
+  const [text, setText] = useState(initialText);
+  const [color, setColor] = useState(initialColor);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -13,8 +24,7 @@ function Form({ onAddTask }) {
       return;
     }
 
-    onAddTask(trimmedText, color);
-    setText("");
+    onSubmit(trimmedText, color);
   };
 
   return (
@@ -35,46 +45,28 @@ function Form({ onAddTask }) {
         </p>
 
         <div className="flex gap-3">
-            <button
-            type="button"
-            onClick={() => setColor("yellow")}
-            className={`h-8 w-8 rounded-full bg-yellow-200 ring-2 transition hover:scale-110 ${
-                color === "yellow"
-                ? "ring-indigo-600 ring-offset-2"
-                : "ring-transparent"
-            }`}
-            aria-label="Seleccionar amarillo"
-            />
-
-            <button
-            type="button"
-            onClick={() => setColor("pink")}
-            className={`h-8 w-8 rounded-full bg-pink-200 ring-2 transition hover:scale-110 ${
-            color === "pink"
-                ? "ring-indigo-600 ring-offset-2"
-                : "ring-transparent"
-            }`}
-            aria-label="Seleccionar rosa"
-            />
-
-            <button
-            type="button"
-            onClick={() => setColor("blue")}
-            className={`h-8 w-8 rounded-full bg-blue-200 ring-2 transition hover:scale-110 ${
-            color === "blue"
-                ? "ring-indigo-600 ring-offset-2"
-                : "ring-transparent"
-            }`}
-            aria-label="Seleccionar azul"
-            />
-
+          <div className="flex gap-3">
+            {colors.map((colorOption) => (
+              <button
+                key={colorOption.value}
+                type="button"
+                onClick={() => setColor(colorOption.value)}
+                className={`h-8 w-8 rounded-full ${colorOption.className} ring-2 transition hover:scale-110 ${
+                  color === colorOption.value
+                    ? "ring-indigo-600 ring-offset-2"
+                    : "ring-transparent"
+                }`}
+                aria-label={`Seleccionar color ${colorOption.value}`}
+              />
+            ))}
+          </div>
         </div>
         </div>
 
       <button
         type="submit"
         className="w-full rounded-xl bg-indigo-600 px-5 py-3 font-bold text-white transition hover:bg-indigo-700">
-        Agregar tarea
+        {submitLabel}
       </button>
     </form>
   );

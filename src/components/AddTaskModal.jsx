@@ -21,7 +21,7 @@ function AddTaskModal({ onAddTask, onClose }) {
         </div>
 
         <Form
-        onAddTask={(text, color) => {
+            onSubmit={(text, color) => {
             onAddTask(text, color);
             onClose();
         }}

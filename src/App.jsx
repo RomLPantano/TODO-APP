@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import Form from "./components/Form";
 import FilterButtons from "./components/FilterButtons";
 import TodoList from "./components/TodoList";
 import AddTaskModal from "./components/AddTaskModal";
-import AddTaskButton from "./components/AddTaskButton";
+import Button from "./components/Button";
+import { FaPlus } from "react-icons/fa";
 
 function App() {
   const [tasks, setTasks] = useState(() => {
@@ -78,7 +78,14 @@ function App() {
 
       <div className="grid gap-6 md:grid-cols-[220px_1fr]">
         <aside className="rounded-2xl bg-white p-4 shadow-sm">
-          <AddTaskButton onClick={() => setIsModalOpen(true)} />
+          <Button
+            onClick={() => setIsModalOpen(true)}
+            className="mb-6 w-full">
+            <span className="flex items-center justify-center gap-2">
+              <FaPlus />
+              Nueva tarea
+            </span>
+          </Button>
 
           <FilterButtons
             activeFilter={activeFilter}
